@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
+
+code.hljs {
+    font-family:  "Source Code Pro";
+}
+
+.markdown-body
+{
+    font-size: 18px;
+}
+
+.note
+{
+    font-size: 16px;
+}
+
+.highlight
+{
+    font-size: 95% !important;
+}
+
+.markdown-body
+{
+    font-family: Arial, Noto Serif SC, "Microsoft Yahei";
+}
+
+
+
