@@ -3,32 +3,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
 
 code.hljs {
-    font-family:  "Source Code Pro";
+    font-family: "JetBrains Mono";
 }
 
-.markdown-body
-{
+.markdown-body {
     font-size: 18px;
 }
 
-.note
-{
+.note {
     font-size: 16px;
 }
 
-.highlight
-{
+.highlight {
     font-size: 95% !important;
 }
 
-.markdown-body
-{
+.markdown-body {
     font-family: Arial, Noto Serif SC, "Microsoft Yahei";
 }
 
-.top-nav-collapse
-{
-
+.navbar {
+    position: absolute;
+    top: 0; /* 可以调整这个值来改变导航栏在页面中的位置 */
+    box-shadow: none;
 }
 
+#board {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
 
+#subtitle
+{
+    color: white;
+}
