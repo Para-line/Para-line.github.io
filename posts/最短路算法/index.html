@@ -19,7 +19,7 @@
     <meta name="description" content="todo list：  更新dijkstra算法和bellman-ford算法的证明  基础知识 链表（数组模拟） 链表是指如下图所示的数据结构，跟数组不同的地方就在于链表可以无限制的加入和删除元素（无限制指数量上，而不是位置上）：  其中数组的下标表示当前点的编号，从0开始，e[i]表示当前节点储存的值。ne[i]表示当前节点的下一个节点编号。 至于head节点和-1节点的用处">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最短路算法">
-<meta property="og:url" content="http://para-line.github.io/posts/%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:url" content="https://blog.paraline.top/posts/%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Paraline&#39;s Blog">
 <meta property="og:description" content="todo list：  更新dijkstra算法和bellman-ford算法的证明  基础知识 链表（数组模拟） 链表是指如下图所示的数据结构，跟数组不同的地方就在于链表可以无限制的加入和删除元素（无限制指数量上，而不是位置上）：  其中数组的下标表示当前点的编号，从0开始，e[i]表示当前节点储存的值。ne[i]表示当前节点的下一个节点编号。 至于head节点和-1节点的用处">
 <meta property="og:locale" content="zh_CN">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"para-line.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"ynQw6Q7W2fOzEYRv4F6NsdZN-gzGzoHsz","app_key":"JWtWrXxjhx0fquDKEm4Zuz6H","server_url":"https://ynqw6q7w.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"blog.paraline.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"ynQw6Q7W2fOzEYRv4F6NsdZN-gzGzoHsz","app_key":"JWtWrXxjhx0fquDKEm4Zuz6H","server_url":"https://ynqw6q7w.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -87,6 +87,35 @@
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
   
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
 
 
   
@@ -485,7 +514,7 @@ src="https://s2.loli.net/2023/08/03/LjP7MruDBQxtIK3.png" srcset="/img/loading.gi
   <div class="license-box my-3">
     <div class="license-title">
       <div>最短路算法</div>
-      <div>http://para-line.github.io/posts/最短路算法/</div>
+      <div>https://blog.paraline.top/posts/最短路算法/</div>
     </div>
     <div class="license-meta">
       
@@ -545,6 +574,41 @@ src="https://s2.loli.net/2023/08/03/LjP7MruDBQxtIK3.png" srcset="/img/loading.gi
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Para-line/BlogComment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>
@@ -859,9 +923,9 @@ src="https://s2.loli.net/2023/08/03/LjP7MruDBQxtIK3.png" srcset="/img/loading.gi
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
-
   <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 

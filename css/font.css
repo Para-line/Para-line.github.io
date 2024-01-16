@@ -28,12 +28,26 @@ code.hljs {
     box-shadow: none;
 }
 
+
 #board {
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
 }
 
-#subtitle
-{
+.sidebar {
+    /*border: 2px solid #000000; !* 设置边框颜色和宽度 *!*/
+    border-radius: 10px; /* 设置圆角大小 */
+    margin-left: 100px;
+    margin-right: auto;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    display: inline-block; /* 启用flex布局 */
+    padding: 20px; /* 根据需要调整左侧内边距 */
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-color:  #00000080;
+}
+
+#subtitle {
     color: white;
 }
+
