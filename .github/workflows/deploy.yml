@@ -1,0 +1,39 @@
+name: Deploy blog
+on:
+  push:
+    branches:
+      - gh-pages
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: prepare node env
+        uses: actions/setup-node@v4
+        with:
+          node-version: "21.7.1"
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: set github profile
+        run: |  
+          git config --global user.name 'paraline'  
+          git config --global user.email 'paraline666@gmail.com'
+      - name: hexo generate
+        run: |
+		  npm init -y
+          npm i -g hexo  
+          npm i  
+          hexo clean && hexo g && hexo d
+      - name: ssh remove server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+	      username: ${{ secrets.USERNAME }}
+	      password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |  
+            cd /var/www/blog.paraline.top/html
+            git pull origin gh-pages --rebase  
+            sudo nginx -s reload
