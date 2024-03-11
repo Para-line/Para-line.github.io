@@ -51,3 +51,15 @@ code.hljs {
     color: white;
 }
 
+strong{
+    color: #4a75b8;
+    font-weight: bold;
+}
+
+.navbar strong {
+    color: white;
+}
+
+.navbar .nav-item .nav-link{
+    color: white;
+}
