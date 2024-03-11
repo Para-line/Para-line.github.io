@@ -22,7 +22,7 @@ jobs:
           git config --global user.email 'paraline666@gmail.com'
       - name: hexo generate
         run: |  
-		  npm init -y
+          npm init -y
           npm i -g hexo  
           npm i  
           hexo clean && hexo g && hexo d
@@ -30,8 +30,8 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
-	      username: ${{ secrets.USERNAME }}
-	      password: ${{ secrets.PASSWORD }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           port: 22
           script: |  
             cd /var/www/blog.paraline.top/html
