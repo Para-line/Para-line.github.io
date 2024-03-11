@@ -17,11 +17,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: set github profile
-        run: |
+        run: |  
           git config --global user.name 'paraline'  
           git config --global user.email 'paraline666@gmail.com'
       - name: hexo generate
-        run: |
+        run: |  
 		  npm init -y
           npm i -g hexo  
           npm i  
