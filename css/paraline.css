@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
+
+code.hljs {
+    font-family: "JetBrains Mono";
+}
+
+.markdown-body {
+    font-size: 18px;
+}
+
+.note {
+    font-size: 16px;
+}
+
+.highlight {
+    font-size: 95% !important;
+}
+
+.markdown-body {
+    font-family: Arial, Noto Serif SC, "Microsoft Yahei";
+}
+
+.navbar {
+    position: absolute;
+    top: 0; /* 可以调整这个值来改变导航栏在页面中的位置 */
+    box-shadow: none;
+}
+
+
+#board {
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+.sidebar {
+    /*border: 2px solid #000000; !* 设置边框颜色和宽度 *!*/
+    border-radius: 10px; /* 设置圆角大小 */
+    margin-left: auto !important;
+    margin-right: auto;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    display: inline-block; /* 启用flex布局 */
+    padding: 20px; /* 根据需要调整左侧内边距 */
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-color:  #00000080;
+    max-width: 230px; /* 不超过400px宽 */
+    min-width: 200px; /* 不低于200px宽 */
+}
+
+
+.side-col{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.banner-text {
+    color: white;
+}
+
+strong{
+    color: #e06c75;
+    font-weight: bold;
+}
+
+.navbar strong {
+    color: white;
+}
+
+.navbar .nav-item .nav-link{
+    color: white;
+}

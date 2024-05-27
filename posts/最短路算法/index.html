@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Paraline">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="todo list：   更新dijkstra算法和bellman-ford算法的证明  基础知识 链表（数组模拟） 链表是指如下图所示的数据结构，跟数组不同的地方就在于链表可以无限制的加入和删除元素（无限制指数量上，而不是位置上）：  其中数组的下标表示当前点的编号，从0开始，e[i]表示当前节点储存的值。ne[i]表示当前节点的下一个节点编号。 至于head节点和-1节点的用处，可以先不用纠结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路算法">
+<meta property="og:url" content="https://blog.paraline.top/posts/%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Paraline&#39;s Blog">
+<meta property="og:description" content="todo list：   更新dijkstra算法和bellman-ford算法的证明  基础知识 链表（数组模拟） 链表是指如下图所示的数据结构，跟数组不同的地方就在于链表可以无限制的加入和删除元素（无限制指数量上，而不是位置上）：  其中数组的下标表示当前点的编号，从0开始，e[i]表示当前节点储存的值。ne[i]表示当前节点的下一个节点编号。 至于head节点和-1节点的用处，可以先不用纠结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/07/27/B6XtJFecsWxihdR.png">
+<meta property="og:image" content="https://s2.loli.net/2023/07/27/BKTl5ISHunV1GPY.png">
+<meta property="og:image" content="https://s2.loli.net/2023/07/27/ZPuhsmeHGzJLSO8.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/03/LjP7MruDBQxtIK3.png">
+<meta property="article:published_time" content="2023-08-03T16:48:00.000Z">
+<meta property="article:modified_time" content="2024-05-27T12:22:55.072Z">
+<meta property="article:author" content="Paraline">
+<meta property="article:tag" content="最短路">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2023/07/27/B6XtJFecsWxihdR.png">
+  
+  
+  
+  <title>最短路算法 - Paraline&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/paraline.css">
+<link rel="stylesheet" href="/css/code.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.paraline.top","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"ynQw6Q7W2fOzEYRv4F6NsdZN-gzGzoHsz","app_key":"JWtWrXxjhx0fquDKEm4Zuz6H","server_url":"https://ynqw6q7w.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  <div id="web_bg"></div>
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Paraline&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://s2.loli.net/2023/08/03/KPgQDnv7y9rV2Ml.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="最短路算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-03 16:48" pubdate>
+          2023/08/03 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          预计阅读时长：56 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">最短路算法</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年5月27日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>todo list：</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+更新dijkstra算法和bellman-ford算法的证明</li>
+</ul>
+<h1 id="基础知识">基础知识</h1>
+<h2 id="链表数组模拟">链表（数组模拟）</h2>
+<p><strong>链表</strong>是指如下图所示的数据结构，跟数组不同的地方就在于链表可以无限制的加入和删除元素（无限制指数量上，而不是位置上）： <img src="https://s2.loli.net/2023/07/27/B6XtJFecsWxihdR.png" srcset="/img/loading.gif" lazyload /></p>
+<p>其中数组的下标表示当前点的编号，从0开始，<code>e[i]</code>表示当前节点储存的值。<code>ne[i]</code>表示当前节点的下一个节点编号。 至于head节点和-1节点的用处，可以先不用纠结，之后我会在专门讲链表这个数据结构的时候详细讲。 而在链表头插入元素的方法为：让当前节点的 ne 指向 head 指向的元素，再把 head 指向的元素改为当前节点。在链表其他位置插入元素也是同理。</p>
+<p><img src="https://s2.loli.net/2023/07/27/BKTl5ISHunV1GPY.png" srcset="/img/loading.gif" lazyload /> 而理解了上面的内容，删除元素的操作即为将当前节点的上一个节点的 ne 指向当前节点的下一个元素。当然这样操作，这个元素并没有真正消失，只是对外表现出来像没有。（就像电路里被短路了的效果）这样会有一定空间的浪费，但是在写算法题的时候这样足够了。 具体的c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 初始化</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    head = <span class="hljs-number">-1</span>;<br>    idx = <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 将x插到头结点后面</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addFirst</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = x, ne[idx] = head, head = idx;<br>    idx++;<br>&#125;<br><br><span class="hljs-comment">// 将x插到下标是k的点后面</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> k, <span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = x, ne[idx] = ne[k], ne[k] = idx;<br>    idx++;<br>&#125;<br><br><span class="hljs-comment">// 将下标是k的点后面的点删掉</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>&#123;<br>    ne[k] = ne[ne[k]];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里 idx 的意思可以理解为：给新插入的节点分配 idx 指向的位置（位置是指在内存中，而不是在链表中）。 <img src="https://s2.loli.net/2023/07/27/ZPuhsmeHGzJLSO8.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="邻接表存储图">邻接表存储图</h2>
+<p>邻接表的含义是开多个链表，每个链表内的元素表示某个节点所能到的所有点。 具体代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这是不需要记录权值的情况下，如果需要记录权值，需要另外开一个<code>w[]</code>数组。 代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>接下来让我们进入最短路算法：</p>
+<h1 id="dijkstra算法朴素版">dijkstra算法（朴素版）</h1>
+<h2 id="算法流程">算法流程</h2>
+<ul>
+<li>初始化<code>dist[1]</code>为0，对于其他点 i，初始化<code>dist[i]</code>为正无穷。并初始化集合S记录所有已经确定最短距离的点。</li>
+<li>遍历所有点
+<ul>
+<li>找到一个不在 S 中并且<code>dist[i]</code>最小的点t（遍历所有点<code>dist[i]</code>）</li>
+<li>将 t 加入 S 中（可以证明此时 t 的距离已经是最小，之后不可能再被更新，详见之后的证明）</li>
+<li>用 t 更新与 t 相连的所有点的距离（如果变小才更新） 其中，”用 t 更新与 t 相连的所有点的距离“这一操作也称为松弛操作（relax）。</li>
+</ul></li>
+</ul>
+<h2 id="算法证明">算法证明</h2>
+<p>略（之后在补充）</p>
+<h2 id="适用范围">适用范围</h2>
+<p>dijkstra算法可以用于所有的有向正权图。（无向图是有向图的一种）。</p>
+<h2 id="时间复杂度分析">时间复杂度分析</h2>
+<p>遍历所有点是 <span class="math inline">\(O(n)\)</span> 的时间复杂度。对于每个循环，找到不在 <span class="math inline">\(S\)</span> 中并且<code>dist[i]</code>最小的点，是 <span class="math inline">\(O(n)\)</span> 的时间复杂度。而将 t 加入 <span class="math inline">\(S\)</span> 中是 <span class="math inline">\(O(1)\)</span> 的时间复杂度。遍历所有点，并用他们更新所连点的距离，总共的时间复杂度是 <span class="math inline">\(O(m)\)</span> 。所以整个算法的时间复杂度为 <span class="math inline">\(O(n^{2}+n+m)\)</span> ，因为有向完全图最多也才 <span class="math inline">\(n(n-1)\)</span> 条边，所以 <span class="math inline">\(O(n^{2}+n+m) = O(n^{2})\)</span> 。</p>
+<h2 id="代码实现">代码实现</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">510</span>;<br><span class="hljs-type">int</span> g[N][N];<br><span class="hljs-type">int</span> dist[N];<br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">bool</span> st[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);<br>    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>    &#123;<br>        <span class="hljs-type">int</span> t = <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (!st[j] <span class="hljs-built_in">and</span> (t == <span class="hljs-number">-1</span> <span class="hljs-keyword">or</span> dist[j] &lt; dist[t]))<br>                t = j;<br>        &#125;<br>        st[t] = <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">2</span>; j &lt;= n; j++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (!st[j])<br>                dist[j] = <span class="hljs-built_in">min</span>(dist[j], dist[t] + g[t][j]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">return</span> dist[n];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-built_in">memset</span>(g, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> g);<br>    <span class="hljs-keyword">while</span> (m--)<br>    &#123;<br>        <span class="hljs-type">int</span> a, b, w;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;w);<br>        g[a][b] = <span class="hljs-built_in">min</span>(g[a][b], w);<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">dijkstra</span>() &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="dijkstra算法堆优化版">dijkstra算法（堆优化版）</h1>
+<h2 id="算法流程-1">算法流程</h2>
+<p>回顾一下dijkstra算法的流程：</p>
+<ul>
+<li>初始化<code>dist[1]</code>为0，对于其他点 i，初始化<code>dist[i]</code>为正无穷。并初始化集合S记录所有已经确定最短距离的点。</li>
+<li>遍历所有点
+<ul>
+<li>找到一个不在 S 中并且<code>dist[i]</code>最小的点t（遍历所有点<code>dist[i]</code>）</li>
+<li>将 t 加入 S 中（可以证明此时 t 的距离已经是最小，之后不可能再被更新，详见之后的证明）</li>
+<li>用 t 更新与 t 相连的所有点的距离</li>
+</ul></li>
+</ul>
+<p>其中找到不在 S 中并且<code>dist[i]</code>最小的点在朴素版中是用遍历的办法来查找，而这一操作可以用堆来优化，以实现更高的效率。 实际最终的算法流程为：</p>
+<ul>
+<li>初始化<code>dist[1]</code>为0，对于其他点 i，初始化<code>dist[i]</code>为正无穷。并初始化集合S记录所有已经确定最短距离的点。</li>
+<li>若堆非空
+<ul>
+<li>找到一个不在 S 中并且<code>dist[i]</code>最小的点t（即取出堆顶）</li>
+<li>将 t 加入 S 中</li>
+<li>用 t 更新与 t 相连的所有点的距离，并将这些点加入堆当中</li>
+</ul></li>
+</ul>
+<h2 id="时间复杂度分析-1">时间复杂度分析</h2>
+<p>每次循环中，堆中找到最小的点是 <span class="math inline">\(O(1)\)</span> 的时间复杂度，把一个数标记为在 S 中是 <span class="math inline">\(O(1)\)</span> 的时间复杂度。将一个数加入到堆中合适的位置是 <span class="math inline">\(O(\log m)\)</span> 的时间复杂度，有效的循环次数最多为n次，此时的时间复杂度变为 <span class="math inline">\(O(n+n+n\log m) = O(n \log m)\)</span>。</p>
+<h2 id="适用范围-1">适用范围</h2>
+<p>由于 <span class="math inline">\(O(\log m)\)</span> 优于 <span class="math inline">\(O(n)\)</span> ，所以堆优化版的dijkstra基本在任何情况下都会优于朴素版的dijkstra算法。可以无脑选用堆优化版本的dijkstra算法。</p>
+<h2 id="代码实现-1">代码实现</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int, int&gt;</span></span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1.5</span> * <span class="hljs-number">1e6</span>;<br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">int</span> e[N], w[N], h[N], ne[N];<br><span class="hljs-type">int</span> dist[N];<br><span class="hljs-type">int</span> idx;<br><span class="hljs-type">bool</span> st[N];<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b;<br>    w[idx] = c;<br>    ne[idx] = h[a];<br>    h[a] = idx++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);<br>    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; heap;<br>    heap.<span class="hljs-built_in">push</span>(&#123;dist[<span class="hljs-number">1</span>], <span class="hljs-number">1</span>&#125;);<br>    <span class="hljs-keyword">while</span> (heap.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-keyword">auto</span> t = heap.<span class="hljs-built_in">top</span>();<br>        <span class="hljs-type">int</span> v = t.second, d = t.first;<br>        heap.<span class="hljs-built_in">pop</span>();<br>        <span class="hljs-keyword">if</span> (st[v])<br>            <span class="hljs-keyword">continue</span>;<br>        st[v] = <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = h[v]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        &#123;<br>            <span class="hljs-type">int</span> j = e[i];<br>            <span class="hljs-keyword">if</span> (dist[j] &gt; dist[v] + w[i])<br>            &#123;<br>                dist[j] = dist[v] + w[i];<br>                heap.<span class="hljs-built_in">push</span>(&#123;dist[j], j&#125;);<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> dist[n];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);<br>    <span class="hljs-built_in">memset</span>(h, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> h);<br>    <span class="hljs-keyword">while</span> (m--)<br>    &#123;<br>        <span class="hljs-type">int</span> a, b, w;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;w);<br>        <span class="hljs-built_in">add</span>(a, b, w);<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">dijkstra</span>() &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="bellman-ford算法">Bellman-Ford算法</h1>
+<h2 id="算法流程-2">算法流程</h2>
+<ul>
+<li>循环n次</li>
+<li>循环所有边 <span class="math inline">\(e_{a\to b}\)</span>
+<ul>
+<li>用a的距离更新b的距离（如果变小才更新）</li>
+</ul></li>
+</ul>
+<p>并且，循环的次数是有实际意义的，循环第k次得到的是不超过k条边的最短路。</p>
+<p>不过前提是每次更新都用上一次的 dist。举个例子：如果一幅图：1号点可以走到2号点，2号点可以走到3号点。用1号点先更新2号点，然后用2号点更新3号点的时候用的是2号点被1号点更新前的 dist。如果不这样做，显然不满足以上的性质。</p>
+<h2 id="时间复杂度">时间复杂度</h2>
+<p>容易看出，Bellman-Ford算法的时间复杂度是 <span class="math inline">\(O(nm)\)</span> 。</p>
+<h2 id="适用范围-2">适用范围</h2>
+<p>适用于求含有负权边且存在最短路的图的最短路问题。</p>
+<h2 id="代码实现-2">代码实现</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">510</span>, M = <span class="hljs-number">1e5</span>+<span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span><br>&#123;<br>    <span class="hljs-type">int</span> a, b, c;<br>&#125; edges[M];<br><br><span class="hljs-type">int</span> n, m, k;<br><span class="hljs-type">int</span> dist[M];<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bellman_ford</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);<br><br>    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++)<br>        &#123;<br>            <span class="hljs-keyword">auto</span> e = edges[j];<br>            dist[e.b] = <span class="hljs-built_in">min</span>(dist[e.b], dist[e.a] + e.c);<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++)<br>    &#123;<br>        <span class="hljs-type">int</span> a, b, c;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;c);<br>        edges[i] = &#123;a, b, c&#125;;<br>    &#125;<br><br>    <span class="hljs-built_in">bellman_ford</span>();<br><br>    <span class="hljs-keyword">if</span> (dist[n] &gt; <span class="hljs-number">0x3f3f3f3f</span> / <span class="hljs-number">2</span>)<br>        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;impossible&quot;</span>);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, dist[n]);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这段代码中impossible的判断条件是<code>dist[n] &gt; 0x3f3f3f3f / 2</code>，至于其中的原因，在接下来一节讲了SPFA算法之后再进行对比解释。</p>
+<h1 id="spfa算法">SPFA算法</h1>
+<h2 id="算法简介">算法简介</h2>
+<p>SPFA算法也是对Bellman-Ford算法的优化。我们在Bellman-Ford算法中注意到，有一些更新是没有必要的，在判断<code>dist[b] = min(dist[b], dist[a]+w)</code>的时候，只有在a更新之后，这一步判断才是有必要的。所以我们可以用一个队列来记录距离被更新的点。</p>
+<h2 id="算法流程-3">算法流程</h2>
+<ul>
+<li>将一号点加入队列中</li>
+<li>当队列非空时：
+<ul>
+<li>取出队列中第一个元素</li>
+<li>更新这个元素连接的所有点的距离</li>
+</ul></li>
+</ul>
+<h2 id="时间复杂度分析-2">时间复杂度分析</h2>
+<p>通过查阅资料（doge），SPFA算法的时间复杂度是O(km)，其中k是起点到终点最短路的长度，m是图中边的总数。在最坏情况下，SPFA算法的时间复杂度可以达到O(nm)，其中n是图中点的总数。</p>
+<h2 id="适用范围-3">适用范围</h2>
+<p>因为SPFA是Bellman-Ford算法的优化版，所以可以用Bellman-Ford算法的地方都可以用SPFA，并且优先选择SPFA。</p>
+<h2 id="代码实现-3">代码实现</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> fastio                   \</span><br><span class="hljs-meta">    ios::sync_with_stdio(false); \</span><br><span class="hljs-meta">    cin.tie(0);                  \</span><br><span class="hljs-meta">    cout.tie(0)</span><br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">int</span> e[N], w[N], ne[N], h[N];<br><span class="hljs-type">int</span> dist[N];<br><span class="hljs-type">int</span> idx;<br><span class="hljs-type">bool</span> st[N];<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b;<br>    ne[idx] = h[a];<br>    w[idx] = c;<br>    h[a] = idx++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SPFA</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);<br>    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    queue&lt;<span class="hljs-type">int</span>&gt; q;<br>    q.<span class="hljs-built_in">push</span>(<span class="hljs-number">1</span>);<br>    st[<span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-type">int</span> t = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop</span>();<br>        st[t] = <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        &#123;<br>            <span class="hljs-type">int</span> j = e[i];<br>            <span class="hljs-keyword">if</span> (dist[j] &gt; dist[t] + w[i])<br>            &#123;<br>                dist[j] = dist[t] + w[i];<br>                <span class="hljs-keyword">if</span> (!st[j])<br>                &#123;<br>                    q.<span class="hljs-built_in">push</span>(j);<br>                    st[j] = <span class="hljs-literal">true</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    fastio;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-built_in">memset</span>(h, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> h);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++)<br>    &#123;<br>        <span class="hljs-type">int</span> a, b, w;<br>        cin &gt;&gt; a &gt;&gt; b &gt;&gt; w;<br>        <span class="hljs-built_in">add</span>(a, b, w);<br>    &#125;<br>    <span class="hljs-built_in">SPFA</span>();<br>    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>)<br>        cout &lt;&lt; <span class="hljs-string">&quot;impossible&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">else</span><br>        cout &lt;&lt; dist[n] &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>看到这里你可能会问为什么SPFA中的<code>dist[n]</code>要判断和0x3f3f3f3f是不是相等，而Bellman-Ford只需要大于 (0x3f3f3f3f)/2 就行了。下面我用一张图来直观的解释。 <img src="https://s2.loli.net/2023/08/03/LjP7MruDBQxtIK3.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在下图中，如果使用Bellman-Ford算法，每条边都会被用来更新，则最后<code>dist[5]</code>会是inf-7，并且在做题的时候使用的inf只是一个很大的数，并不是真正的无穷，所以inf-7和inf是不一样的，需要结合题意放大<code>dist[n]</code>的范围。而在SPFA算法中，2，3，4根本就不会被加入队列，所以并不会更新到5号节点，故可以直接判断。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" class="print-no-link">#最短路</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>最短路算法</div>
+      <div>https://blog.paraline.top/posts/最短路算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Paraline</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Para-line/BlogComment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        Visits 
+        <span id="leancloud-site-pv"></span>
+         
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        Visitors 
+        <span id="leancloud-site-uv"></span>
+         
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script src="/js/background.js"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
